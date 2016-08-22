@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:background="@drawable/button_background_selector"
+        android:id="@+id/empty_fresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="暂无数据点击刷新"
+        android:textSize="40sp"
+        />
+
+</LinearLayout>
