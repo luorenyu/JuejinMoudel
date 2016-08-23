@@ -160,14 +160,23 @@ public class DateUtils {
             return i+"年前";
         }
 
-        if(getMonth(curDate)!=getMonth(curDate)){
-            return getMonth(curDate)-getMonth(curDate)+"月前";
+        if(getMonth(curDate)!=getMonth(itemDate)){
+            return getMonth(curDate)-getMonth(itemDate)+"月前";
         }
 
-        
+        if(getDay(curDate)!=getDay(itemDate)){
+            return getDay(curDate)-getDay(itemDate)+"天前";
+        }
 
+        if(getHour(curDate)!=getHour(itemDate)){
+            return getHour(curDate)-getHour(itemDate)+"小时前";
+        }
 
-        return null;
+        if (getMinute(curDate)!=getMinute(itemDate)){
+            return getMinute(curDate)-getMinute(itemDate)+"分前";
+        }
+
+        return "刚刚";
     }
 
 }

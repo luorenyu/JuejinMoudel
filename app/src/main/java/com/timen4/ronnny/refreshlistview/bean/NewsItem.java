@@ -1,5 +1,7 @@
 package com.timen4.ronnny.refreshlistview.bean;
 
+import com.timen4.ronnny.refreshlistview.util.DateUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,14 +16,13 @@ public class NewsItem {
     long timeStamp;
     boolean isoffline;
 
-
-    public NewsItem(int image, String title, int likes, String author, long timeStamp, boolean isoffline) {
+    public NewsItem(int image, String title, int likes, String author, long timeStamp, boolean isOffline) {
         Image = image;
         this.title = title;
         this.likes = likes;
         this.author = author;
         this.timeStamp = timeStamp;
-        this.isoffline = isoffline;
+        this.isoffline = isOffline;
     }
 
     public int getImage() {
@@ -74,19 +75,13 @@ public class NewsItem {
 
     public String getArtcileInfo(){
         String info = null;
-
-
+        if(isoffline){
+            info=getLikes()+"人收藏·"+getAuthor()+"·"+ DateUtils.getGapTimeFromNow(timeStamp)+"·已离线";
+        }else{
+            info=getLikes()+"人收藏·"+getAuthor()+"·"+DateUtils.getGapTimeFromNow(timeStamp);
+        }
         return info;
     }
-
-    /*时间戳转换成字符窜*/
-    public static String getDateToString(long infoTime) {
-        long currentTimeMillis = System.currentTimeMillis();
-        Date curData =new Date(currentTimeMillis);
-
-        return "";
-    }
-
 
 
 }
