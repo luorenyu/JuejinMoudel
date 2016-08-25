@@ -7,9 +7,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <!--<item name="android:scaleType">centerInside</item>-->
     <style name="BottomButtonTheme">
+        <item name="android:background">#ffffffff</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:background">@drawable/button_background_selector</item>
+
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
     </style>

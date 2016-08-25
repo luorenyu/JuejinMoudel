@@ -7,6 +7,7 @@
     android:padding="5dp"
     >
     <ImageView
+        android:scaleType="center"
         android:id="@+id/iv_image"
         android:src="@mipmap/ic_launcher"
         android:layout_width="60dp"

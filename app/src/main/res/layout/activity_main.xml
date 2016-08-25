@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.timen4.ronnny.refreshlistview.MainActivity">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/sr_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+
+        <ListView
+            android:dividerHeight="0.5dp"
+            android:divider="#bbbbddff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:layout_alignParentTop="true" />
+        <Button
+            android:clickable="true"
+            android:visibility="gone"
+            android:id="@+id/empty_fresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="暂无数据点击刷新"
+            android:textSize="40sp"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#999999"
+    />
     <LinearLayout
         android:background="#0000df"
         android:gravity="center_vertical"
@@ -18,43 +47,36 @@
             android:background="#3366ff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        </LinearLayout>
-    <ListView
-        android:dividerHeight="0.5dp"
-        android:divider="#bbbbbb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/listView"
-        android:layout_alignParentTop="true" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#999999"
-    />
+    </LinearLayout>
     <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:divider="#999999"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="50dp">
         <ImageButton
+            android:scaleType="centerInside"
             android:src="@drawable/tab_home_selector"
             style="@style/BottomButtonTheme"
             />
         <ImageButton
-            android:src="@drawable/tab_explore_selector"
+            android:scaleType="centerInside"
+            android:src="@drawable/tab_explore"
             style="@style/BottomButtonTheme"
             />
         <ImageButton
+            android:scaleType="centerInside"
             android:src="@drawable/tab_notificaions_selector"
             style="@style/BottomButtonTheme"
             />
         <ImageButton
+            android:scaleType="centerInside"
             android:src="@drawable/tab_profile_selector"
             style="@style/BottomButtonTheme"
             />
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

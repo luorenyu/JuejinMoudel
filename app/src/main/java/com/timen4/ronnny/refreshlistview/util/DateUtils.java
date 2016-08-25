@@ -173,7 +173,7 @@ public class DateUtils {
         }
 
         if (getMinute(curDate)!=getMinute(itemDate)){
-            return getMinute(curDate)-getMinute(itemDate)+"分前";
+            return getMinute(curDate)-getMinute(itemDate)+"分钟前";
         }
 
         return "刚刚";

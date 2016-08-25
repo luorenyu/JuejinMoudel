@@ -26,7 +26,7 @@ public class ViewHolderAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mDates.size();
+            return mDates==null?0:mDates.size();
     }
 
     @Override
@@ -61,8 +61,12 @@ public class ViewHolderAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void setDate(List<NewsItem> newsItems) {
-        this.mDates =newsItems;
+    public void addDate(List<NewsItem> newsItems) {
+        if(mDates==null){
+            this.mDates =newsItems;
+        }else{
+            mDates.addAll(0,newsItems);
+        }
     }
 
     public class ViewHolder{
