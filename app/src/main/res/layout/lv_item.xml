@@ -4,32 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
-    android:padding="5dp"
+    android:padding="10dp"
+    android:background="@drawable/ripple_bg"
     >
     <ImageView
-        android:scaleType="center"
+        android:scaleType="centerCrop"
         android:id="@+id/iv_image"
-        android:src="@mipmap/ic_launcher"
-        android:layout_width="60dp"
-        android:layout_height="60dp" />
+        android:src="@drawable/img6"
+        android:layout_width="75dp"
+        android:layout_height="75dp" />
     <RelativeLayout
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="8dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="80dp">
         <TextView
+            android:textColor="@android:color/black"
             android:id="@+id/tv_title"
-            android:textSize="16sp"
-            android:text="轻轻的一个吻早已打动我的心，深深地一段情，让我思念到如今"
+            android:textSize="18sp"
             android:lines="2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/tv_info"
             android:singleLine="true"
             android:textSize="13sp"
-            android:textColor="#999999"
-            android:text="9人收藏·小红帽·3小时前·已离线"
+            android:textColor="#99999999"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="20dp" />

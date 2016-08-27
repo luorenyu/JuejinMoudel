@@ -14,8 +14,10 @@
         >
 
         <ListView
+            android:fadingEdge="vertical"
+            android:overScrollMode="ifContentScrolls"
             android:dividerHeight="0.5dp"
-            android:divider="#bbbbddff"
+            android:divider="#22999999"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/listView"
@@ -30,17 +32,15 @@
             android:textSize="40sp"
             />
     </android.support.v4.widget.SwipeRefreshLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#999999"
-    />
+
     <LinearLayout
+        android:visibility="visible"
+        android:clickable="true"
         android:background="#0000df"
         android:gravity="center_vertical"
         android:id="@+id/head_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:orientation="horizontal">
         <android.support.v7.widget.SearchView
             android:layout_margin="10dp"
@@ -49,30 +49,31 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
+        android:gravity="bottom"
+        android:background="@drawable/shadow_bottom"
         android:layout_alignParentBottom="true"
-        android:divider="#999999"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="51dp">
+
+
         <ImageButton
-            android:scaleType="centerInside"
+            android:id="@+id/ib_home"
             android:src="@drawable/tab_home_selector"
             style="@style/BottomButtonTheme"
             />
         <ImageButton
-            android:scaleType="centerInside"
-            android:src="@drawable/tab_explore"
-            style="@style/BottomButtonTheme"
-            />
+            android:id="@+id/ib_explore"
+            android:src="@drawable/tab_explore_selector"
+            style="@style/BottomButtonTheme" />
         <ImageButton
-            android:scaleType="centerInside"
+            android:id="@+id/ib_notifications"
             android:src="@drawable/tab_notificaions_selector"
             style="@style/BottomButtonTheme"
             />
         <ImageButton
-            android:scaleType="centerInside"
+            android:id="@+id/ib_profile"
             android:src="@drawable/tab_profile_selector"
             style="@style/BottomButtonTheme"
             />

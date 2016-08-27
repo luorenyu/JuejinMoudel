@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.timen4.ronnny.refreshlistview.bean.NewsItem;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,11 +19,29 @@ import java.util.List;
 public class ViewHolderAdapter extends BaseAdapter {
 
     private final Context mContext;
-    private List<NewsItem> mDates;
+    private List<NewsItem> mDates=new ArrayList<>();
+    private static final int TITLE=0;
+    private static final int CONTENT=1;
 
     public ViewHolderAdapter(Context mcontext, List<NewsItem> newsItems) {
         this.mContext=mcontext;
-        this.mDates =newsItems;
+        //添加分类的标题
+        mDates.add(new NewsItem("热门文章"));
+        mDates.addAll(1,newsItems);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(position==0){
+            return TITLE;
+        }else{
+            return CONTENT;
+        }
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
     }
 
     @Override
@@ -42,21 +62,49 @@ public class ViewHolderAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         NewsItem item = getItem(position);
-        ViewHolder viewHolder;
+        ContentViewHolder contentViewHolder;
+        TieleViewHolder tieleViewHolder;
+        int type = getItemViewType(position);
         if(convertView==null){
-            viewHolder=new ViewHolder();
-            convertView=View.inflate(mContext,R.layout.lv_item,null);
-            viewHolder.iamge= (ImageView) convertView.findViewById(R.id.iv_image);
-            viewHolder.tv_articleInfo= (TextView) convertView.findViewById(R.id.tv_info);
-            viewHolder.tv_title= (TextView) convertView.findViewById(R.id.tv_title);
-            convertView.setTag(viewHolder);
+            switch (type){
+                case TITLE:
+                    tieleViewHolder=new TieleViewHolder();
+                    convertView=View.inflate(mContext,R.layout.lv_item_title,null);
+                    tieleViewHolder.tv_title= (TextView) convertView.findViewById(R.id.tv_top_title);
+                    tieleViewHolder.tv_title.setText(item.getTitle());
+                    convertView.setTag(tieleViewHolder);
+                    break;
+                case CONTENT:
+                    contentViewHolder=new ContentViewHolder();
+                    convertView=View.inflate(mContext,R.layout.lv_item,null);
+                    contentViewHolder.iamge= (ImageView) convertView.findViewById(R.id.iv_image);
+                    contentViewHolder.tv_articleInfo= (TextView) convertView.findViewById(R.id.tv_info);
+                    contentViewHolder.tv_title= (TextView) convertView.findViewById(R.id.tv_title);
+
+                    contentViewHolder.iamge.setImageResource(item.getImage());
+                    contentViewHolder.tv_title.setText(item.getTitle());
+                    contentViewHolder.tv_articleInfo.setText(item.getArtcileInfo());
+                    convertView.setTag(contentViewHolder);
+
+
+                    break;
+            }
+
         }else{
-            viewHolder= (ViewHolder) convertView.getTag();
+            switch (type){
+                case TITLE:
+                    tieleViewHolder= (TieleViewHolder) convertView.getTag();
+                    tieleViewHolder.tv_title.setText(item.getTitle());
+                    break;
+                case CONTENT:
+                    contentViewHolder= (ContentViewHolder) convertView.getTag();
+                    contentViewHolder.iamge.setImageResource(item.getImage());
+                    contentViewHolder.tv_title.setText(item.getTitle());
+                    contentViewHolder.tv_articleInfo.setText(item.getArtcileInfo());
+            }
         }
 
-        viewHolder.iamge.setImageResource(item.getImage());
-        viewHolder.tv_title.setText(item.getTitle());
-        viewHolder.tv_articleInfo.setText(item.getArtcileInfo());
+
 
         return convertView;
     }
@@ -65,14 +113,17 @@ public class ViewHolderAdapter extends BaseAdapter {
         if(mDates==null){
             this.mDates =newsItems;
         }else{
-            mDates.addAll(0,newsItems);
+            mDates.addAll(1,newsItems);
         }
     }
 
-    public class ViewHolder{
+    public class ContentViewHolder {
         ImageView iamge;
         TextView tv_title;
         TextView tv_articleInfo;
+    }
+    public class TieleViewHolder {
+        TextView tv_title;
     }
 
 }

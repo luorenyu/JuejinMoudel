@@ -8,12 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <!--<item name="android:scaleType">centerInside</item>-->
+    <!-- <item name="android:background">@drawable/button_background_selector</item>-->
     <style name="BottomButtonTheme">
-        <item name="android:background">#ffffffff</item>
+        <item name="android:background">@drawable/ripple_bg</item>
         <item name="android:layout_width">0dp</item>
-
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="topButtonStyle" parent="BottomButtonTheme">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:drawablePadding">-8dp</item>
     </style>
 
 </resources>

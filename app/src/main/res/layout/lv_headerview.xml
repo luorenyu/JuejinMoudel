@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="265dp"
+    android:background="#ddddddee"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:id="@+id/blank"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_adv"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@android:color/holo_red_dark"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            >
+            <Button
+                style="@style/topButtonStyle"
+                android:drawableTop="@drawable/f_d"
+                android:text="费点"
+                />
+            <Button
+                android:drawableTop="@drawable/g_x_b"
+                android:text="贡献榜"
+                style="@style/topButtonStyle" />
+            <Button
+                android:drawableTop="@drawable/h_o_t"
+                android:text="本周最热"
+                style="@style/topButtonStyle" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

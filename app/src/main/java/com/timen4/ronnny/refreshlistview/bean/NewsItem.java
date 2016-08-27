@@ -17,12 +17,21 @@ public class NewsItem {
     boolean isoffline;
 
     public NewsItem(int image, String title, int likes, String author, long timeStamp, boolean isOffline) {
-        Image = image;
+        this.Image = image;
         this.title = title;
         this.likes = likes;
         this.author = author;
         this.timeStamp = timeStamp;
         this.isoffline = isOffline;
+    }
+
+    public NewsItem(String title) {
+        this.Image = 0;
+        this.title = title;
+        this.likes = 0;
+        this.author = "";
+        this.timeStamp = 0;
+        this.isoffline = false;
     }
 
     public int getImage() {
@@ -76,9 +85,9 @@ public class NewsItem {
     public String getArtcileInfo(){
         String info = null;
         if(isoffline){
-            info=getLikes()+"人收藏·"+getAuthor()+"·"+ DateUtils.getGapTimeFromNow(timeStamp)+"·已离线";
+            info=getLikes()+"人收藏 · "+getAuthor()+" · "+ DateUtils.getGapTimeFromNow(timeStamp)+" · 已离线";
         }else{
-            info=getLikes()+"人收藏·"+getAuthor()+"·"+DateUtils.getGapTimeFromNow(timeStamp);
+            info=getLikes()+"人收藏 · "+getAuthor()+" · "+DateUtils.getGapTimeFromNow(timeStamp);
         }
         return info;
     }
