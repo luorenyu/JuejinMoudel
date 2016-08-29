@@ -7,4 +7,9 @@
     <color name="buttom_normal">#ffffff</color>
     <color name="black">#000000</color>
     <color name="font_gray">#999999</color>
+    <color name="search_button_pressed">#64B3FE</color>
+    <color name="serch_button_normal">#3198FD</color>
+    <color name="refresh_circle">#D60B16</color>
+    <color name="text_gray">#D1D1D1</color>
+    <color name="text_black">#363636</color>
 </resources>

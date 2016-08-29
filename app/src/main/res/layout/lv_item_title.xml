@@ -8,7 +8,7 @@
         android:paddingLeft="10dp"
         android:background="@drawable/ripple_bg"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="43dp"
         android:text="热门"
         android:textSize="15sp"
         android:gravity="center_vertical"

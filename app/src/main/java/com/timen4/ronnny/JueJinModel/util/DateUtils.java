@@ -1,9 +1,8 @@
-package com.timen4.ronnny.refreshlistview.util;
+package com.timen4.ronnny.JueJinModel.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.InputMismatchException;
 
 /**
  * Created by luore on 2016/8/21.

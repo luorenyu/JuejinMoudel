@@ -1,9 +1,6 @@
-package com.timen4.ronnny.refreshlistview.bean;
+package com.timen4.ronnny.JueJinModel.bean;
 
-import com.timen4.ronnny.refreshlistview.util.DateUtils;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.timen4.ronnny.JueJinModel.util.DateUtils;
 
 /**
  * Created by luore on 2016/8/21.

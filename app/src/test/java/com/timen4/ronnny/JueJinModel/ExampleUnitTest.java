@@ -1,4 +1,4 @@
-package com.timen4.ronnny.refreshlistview;
+package com.timen4.ronnny.JueJinModel;
 
 import org.junit.Test;
 

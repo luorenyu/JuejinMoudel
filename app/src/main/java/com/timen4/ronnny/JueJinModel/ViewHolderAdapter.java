@@ -1,4 +1,4 @@
-package com.timen4.ronnny.refreshlistview;
+package com.timen4.ronnny.JueJinModel;
 
 import android.content.Context;
 import android.view.View;
@@ -7,10 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.timen4.ronnny.refreshlistview.bean.NewsItem;
+import com.timen4.ronnny.JueJinModel.bean.NewsItem;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**

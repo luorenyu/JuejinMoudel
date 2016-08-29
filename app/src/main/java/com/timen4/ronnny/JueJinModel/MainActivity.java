@@ -1,4 +1,4 @@
-package com.timen4.ronnny.refreshlistview;
+package com.timen4.ronnny.JueJinModel;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -12,12 +12,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.timen4.ronnny.refreshlistview.bean.NewsItem;
+import com.timen4.ronnny.JueJinModel.bean.NewsItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mIb_explore;
     private ArrayList<Integer> imgs=new ArrayList<>();
     private List<NewsItem> mDates;
+    private View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +63,15 @@ public class MainActivity extends AppCompatActivity {
         mEmptyFresh = (Button) findViewById(R.id.empty_fresh);
         mIb_explore = (ImageButton) findViewById(R.id.ib_explore);
         mIb_explore.setImageResource(R.drawable.tab_explore);
-//
-        View view = LayoutInflater.from(this).inflate(R.layout.lv_headerview, mlistView, false);
-        mlistView.addHeaderView(view);
 
 
+
+        header = LayoutInflater.from(this).inflate(R.layout.lv_headerview, mlistView, false);
         mAdapter = new ViewHolderAdapter(this, mDates);
         mlistView.setAdapter(mAdapter);
 
         //设置下拉刷新加载圈的颜色
-        mSr_refresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimaryDark), getResources().getColor(R.color.colorAccent));
+        mSr_refresh.setColorSchemeColors(getResources().getColor(R.color.refresh_circle));
         //设置下拉加载圈出现距离顶部的位置
         mSr_refresh.setDistanceToTriggerSync(getResources().getDimensionPixelOffset(R.dimen.swipe_progress_appear_offset));
         //设置下拉加载圈转动时距离顶部的位置
@@ -158,12 +159,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //第二种方法实现隐藏显示布局,但是这种方法实现之后，headbar和bottombar的敏感度并不是很好
-//        mlistView.setOnScrollListener(new OnScrollListener(){
+//        mlistView.setOnScrollListener(new AbsListView.OnScrollListener(){
 //
 //            @Override
 //            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//
-//
 //            }
 //
 //            @Override
@@ -181,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
+
 
     public void hideBar() {
         mHeaderAnimator = ObjectAnimator.ofFloat(mHead_bar, "translationY", -mHead_bar.getHeight());

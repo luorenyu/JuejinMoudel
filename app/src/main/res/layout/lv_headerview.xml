@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="265dp"
-    android:background="#ddddddee"
+    android:background="#F2F6F9"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal"
+            android:divider="#CFD3D2"
             >
             <Button
                 style="@style/topButtonStyle"

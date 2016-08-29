@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.timen4.ronnny.refreshlistview.MainActivity">
+    tools:context="com.timen4.ronnny.JueJinModel.MainActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/sr_refresh"
@@ -12,10 +12,12 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         >
-
+        <!--overScrollMode:listview 到顶部或底部拉出空白回弹的效果-->
         <ListView
+            android:fadingEdgeLength="15dp"
+            android:requiresFadingEdge="vertical"
             android:fadingEdge="vertical"
-            android:overScrollMode="ifContentScrolls"
+            android:overScrollMode="never"
             android:dividerHeight="0.5dp"
             android:divider="#22999999"
             android:layout_width="match_parent"
@@ -36,17 +38,24 @@
     <LinearLayout
         android:visibility="visible"
         android:clickable="true"
-        android:background="#0000df"
+        android:background="#0280FC"
         android:gravity="center_vertical"
         android:id="@+id/head_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
-        <android.support.v7.widget.SearchView
-            android:layout_margin="10dp"
-            android:background="#3366ff"
+        <Button
+
+            android:drawableLeft="@drawable/tab_home_find_search"
+            android:paddingLeft="8dp"
+            android:drawablePadding="8dp"
+            android:layout_margin="7dp"
+            android:background="@drawable/search_button_selector"
+            android:textColor="#99ffffff"
+            android:text="@string/search"
+            android:gravity="left|center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
         android:gravity="bottom"
