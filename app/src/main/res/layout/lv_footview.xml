@@ -2,14 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="52dp"
-    android:padding="4dp"
+    android:layout_height="wrap_content"
     >
-    <ImageView
-        android:layout_centerInParent="true"
+    <TextView
+        android:id="@+id/tv_loadmore"
+        android:layout_margin="4dp"
+        android:textSize="20sp"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/loading"
+        android:layout_height="wrap_content"
+        android:text="加载更多 · · ·"
         />
 
 </RelativeLayout>

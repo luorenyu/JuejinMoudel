@@ -3,7 +3,9 @@ package com.timen4.ronnny.JueJinModel;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,12 +13,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.timen4.ronnny.JueJinModel.bean.NewsItem;
 
@@ -31,9 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewHolderAdapter mAdapter;
     private SwipeRefreshLayout mSr_refresh;
     private Button mEmptyFresh;
-    int lastFirstVisibleItem = 0;
     private boolean isRunning = false;
-    private boolean mIsShow = true;
+    boolean isLoading=false;
 
     private static  int mTouchSlop = 0;
     private ObjectAnimator mHeaderAnimator;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Integer> imgs=new ArrayList<>();
     private List<NewsItem> mDates;
     private View header;
+    private View footview;
+    private TextView mLoadMore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +67,11 @@ public class MainActivity extends AppCompatActivity {
         mIb_explore = (ImageButton) findViewById(R.id.ib_explore);
         mIb_explore.setImageResource(R.drawable.tab_explore);
 
-
-
+        footview = LayoutInflater.from(this).inflate(R.layout.lv_footview, mlistView, false);
+        mLoadMore = (TextView) footview.findViewById(R.id.tv_loadmore);
         header = LayoutInflater.from(this).inflate(R.layout.lv_headerview, mlistView, false);
+        mlistView.addHeaderView(header);
+        mlistView.addFooterView(footview);
         mAdapter = new ViewHolderAdapter(this, mDates);
         mlistView.setAdapter(mAdapter);
 
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         imgs.add(R.drawable.img8);
         imgs.add(R.drawable.img9);
         imgs.add(R.drawable.img10);
-        mDates = refreshDate();
+        mDates = refreshDate("Init");
     }
 
     private void bindEvents() {
@@ -100,17 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 mSr_refresh.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        List<NewsItem> newsItems=new ArrayList<>();
-                        for (int i=mAdapter.getCount()+10;i>mAdapter.getCount();i--){
-                            NewsItem newsItem;
-                            if(i%2==0){
-                                newsItem= new NewsItem(imgs.get((int)(Math.random()*10)), "NewTitle" + i, (int) (Math.random() * 100), "贤榆的鱼" + i, System.currentTimeMillis(), true);
-                            }else{
-                                newsItem = new NewsItem(imgs.get((int)(Math.random()*10)), "NewTitle" + i, (int) (Math.random() * 100), "xianyu" + i, System.currentTimeMillis(), false);
-                            }
-                            newsItems.add(newsItem);
-                        }
-                        mAdapter.addDate(newsItems);
+                        List<NewsItem> newsItems=refreshDate("New");
+                        mAdapter.addDate(newsItems, true);
                         mAdapter.notifyDataSetChanged();
                         //调用该方法结束刷新，否则加载圈会一直在
                         mSr_refresh.setRefreshing(false);
@@ -121,11 +117,9 @@ public class MainActivity extends AppCompatActivity {
         //第一种方法实现隐藏显示布局
         //该方法布局在显示和隐藏的敏感度没有第二种房是好！
         mlistView.setOnTouchListener(new View.OnTouchListener() {
-
             private float mEndY;
             private float mStartY;
             private int direction;//0表示向上，1表示向下
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()){
@@ -140,13 +134,11 @@ public class MainActivity extends AppCompatActivity {
                             direction = 0;
                             showBar();
                             mStartY = mEndY;
-                            Log.e("renyu", "显示" + mEndY + "");
                             return false;
                         } else if (v1 < -3 && isRunning == false && direction == 0) {
                             direction = 1;
                             hideBar();
                             mStartY = mEndY;
-                            Log.e("renyu", "隐藏" + mEndY + "");
                             return false;
                         }
                         mStartY = mEndY;
@@ -159,29 +151,42 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //第二种方法实现隐藏显示布局,但是这种方法实现之后，headbar和bottombar的敏感度并不是很好
-//        mlistView.setOnScrollListener(new AbsListView.OnScrollListener(){
-//
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//
-//                if (firstVisibleItem>lastFirstVisibleItem&&isRunning){
-//                    showBar();
-//                }
-//                if(firstVisibleItem<lastFirstVisibleItem&&isRunning){
-//                    hideBar();
-//                }
-//
-//                lastFirstVisibleItem=firstVisibleItem;
-//
-//            }
-//        });
+        mlistView.setOnScrollListener(new AbsListView.OnScrollListener(){
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //使用isLoading作为标识符避免刷新到底部时，每次触底进行多次添加
+                if(view.getLastVisiblePosition()==view.getCount()-1&&!isLoading){
+
+                    Log.e("xianyu","lastvisible+"+view.getLastVisiblePosition()+"totle-1="+view.getCount());
+                    mLoadMore.setVisibility(View.VISIBLE);
+                    isLoading=true;
+                    new AsyncTask<Void, Void, List<NewsItem>>() {
+                        @Override
+                        protected List<NewsItem> doInBackground(Void... params) {
+                            SystemClock.sleep(1500);
+                            List<NewsItem> loadItems=refreshDate("Old");
+                            return loadItems;
+                        }
+
+                        @Override
+                        protected void onPostExecute(List<NewsItem> loadItems) {
+                            isLoading=false;
+                            mLoadMore.setVisibility(View.GONE);
+                            mAdapter.addDate(loadItems,false);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }.execute();
+                }
+
+            }
+        });
     }
-
-
 
     public void hideBar() {
         mHeaderAnimator = ObjectAnimator.ofFloat(mHead_bar, "translationY", -mHead_bar.getHeight());
@@ -204,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     public void showBar() {
         mHeaderAnimator = ObjectAnimator.ofFloat(mHead_bar, "translationY", 0);
         mBottomAnimator = ObjectAnimator.ofFloat(mBottom_bar, "translationY", 0);
@@ -211,25 +217,41 @@ public class MainActivity extends AppCompatActivity {
         mHeaderAnimator.setDuration(300).start();
         mBottomAnimator.setDuration(300).start();
     }
-
-
-    private List<NewsItem> refreshDate() {
+    //模拟拉取数据
+    private List<NewsItem> refreshDate(String titleMark) {
         List<NewsItem> newsItems=new ArrayList<>();
-        for (int i=0;i<20;i++){
-            NewsItem newsItem;
-            if(i%2==0){
-                newsItem= new NewsItem(imgs.get((int)(Math.random()*10)), "Title" + i, (int) (Math.random() * 100), "xianyu" + i, System.currentTimeMillis(), true);
-            }else{
-                newsItem = new NewsItem(imgs.get((int)(Math.random()*10)), "Title" + i, (int) (Math.random() * 100), "xianyu" + i, System.currentTimeMillis(), false);
+        if(titleMark.equals("Init")){
+            for (int i=0;i<20;i++){
+                NewsItem newsItem;
+                if(i%2==0){
+                    newsItem= new NewsItem(imgs.get((int)(Math.random()*10)), titleMark+"Title" + i, (int) (Math.random() * 100), "xianyu" + i, System.currentTimeMillis(), true);
+                }else{
+                    newsItem = new NewsItem(imgs.get((int)(Math.random()*10)), titleMark+"Title" + i, (int) (Math.random() * 100), "贤榆的鱼" + i, System.currentTimeMillis(), false);
+                }
+                newsItems.add(newsItem);
             }
-            newsItems.add(newsItem);
+        }else if(titleMark.equals("New")){
+            for (int i=mAdapter.getCount()+10;i>mAdapter.getCount();i--){
+                NewsItem newsItem;
+                if(i%2==0){
+                    newsItem= new NewsItem(imgs.get((int)(Math.random()*10)), titleMark+"Title" + i, (int) (Math.random() * 100), "贤榆的咸" + i, System.currentTimeMillis(), true);
+                }else{
+                    newsItem = new NewsItem(imgs.get((int)(Math.random()*10)), titleMark+"Title" + i, (int) (Math.random() * 100), "ronny" + i, System.currentTimeMillis(), false);
+                }
+                newsItems.add(newsItem);
+            }
+        }else if (titleMark.equals("Old")){
+            for (int i=mAdapter.getCount()+1;i<mAdapter.getCount()+11;i++){
+                NewsItem newsItem;
+                if(i%2==0){
+                    newsItem= new NewsItem(imgs.get((int)(Math.random()*10)), titleMark+"Title" + i, (int) (Math.random() * 100), "贤榆的咸" + i, System.currentTimeMillis(), true);
+                }else{
+                    newsItem = new NewsItem(imgs.get((int)(Math.random()*10)), titleMark+"Title" + i, (int) (Math.random() * 100), "ronny" + i, System.currentTimeMillis(), false);
+                }
+                newsItems.add(newsItem);
+            }
         }
         return newsItems;
     }
-
-
-
-
-
 
 }

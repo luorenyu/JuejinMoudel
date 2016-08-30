@@ -14,12 +14,10 @@
         >
         <!--overScrollMode:listview 到顶部或底部拉出空白回弹的效果-->
         <ListView
-            android:fadingEdgeLength="15dp"
-            android:requiresFadingEdge="vertical"
             android:fadingEdge="vertical"
             android:overScrollMode="never"
             android:dividerHeight="0.5dp"
-            android:divider="#22999999"
+            android:divider="#05999999"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/listView"

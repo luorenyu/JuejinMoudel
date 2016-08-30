@@ -108,11 +108,16 @@ public class ViewHolderAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void addDate(List<NewsItem> newsItems) {
+    public void addDate(List<NewsItem> newsItems, boolean isHead) {
         if(mDates==null){
             this.mDates =newsItems;
         }else{
-            mDates.addAll(1,newsItems);
+            if (isHead){
+                mDates.addAll(1,newsItems);
+            }else{
+                mDates.addAll(getCount(),newsItems);
+            }
+
         }
     }
 
