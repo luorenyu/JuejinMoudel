@@ -67,10 +67,13 @@ public class MainActivity extends AppCompatActivity {
         mIb_explore = (ImageButton) findViewById(R.id.ib_explore);
         mIb_explore.setImageResource(R.drawable.tab_explore);
 
+        header = LayoutInflater.from(this).inflate(R.layout.lv_headerview, mlistView, false);
+//      header = getLayoutInflater().inflate(R.layout.lv_headerview,null,true);
+//      header=View.inflate(this,R.layout.lv_headerview,null);
+        mlistView.addHeaderView(header);
+
         footview = LayoutInflater.from(this).inflate(R.layout.lv_footview, mlistView, false);
         mLoadMore = (TextView) footview.findViewById(R.id.tv_loadmore);
-        header = LayoutInflater.from(this).inflate(R.layout.lv_headerview, mlistView, false);
-        mlistView.addHeaderView(header);
         mlistView.addFooterView(footview);
         mAdapter = new ViewHolderAdapter(this, mDates);
         mlistView.setAdapter(mAdapter);
@@ -114,12 +117,9 @@ public class MainActivity extends AppCompatActivity {
                 },1000);
             }
         });
-        //第一种方法实现隐藏显示布局
-        //该方法布局在显示和隐藏的敏感度没有第二种房是好！
         mlistView.setOnTouchListener(new View.OnTouchListener() {
             private float mEndY;
             private float mStartY;
-            private int direction;//0表示向上，1表示向下
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()){
@@ -130,13 +130,11 @@ public class MainActivity extends AppCompatActivity {
                         mEndY = event.getY();
                         float v1 = mEndY - mStartY;
 
-                        if (v1 > 3 && isRunning == false && direction == 1) {
-                            direction = 0;
+                        if (v1 > 3 && !isRunning ) {
                             showBar();
                             mStartY = mEndY;
                             return false;
-                        } else if (v1 < -3 && isRunning == false && direction == 0) {
-                            direction = 1;
+                        } else if (v1 < -3 && !isRunning) {
                             hideBar();
                             mStartY = mEndY;
                             return false;
@@ -150,20 +148,14 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        //第二种方法实现隐藏显示布局,但是这种方法实现之后，headbar和bottombar的敏感度并不是很好
         mlistView.setOnScrollListener(new AbsListView.OnScrollListener(){
-
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-
             }
-
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                //使用isLoading作为标识符避免刷新到底部时，每次触底进行多次添加
+                //使用isLoading作为标识符避免刷新到底部时，每次触底进行多次加载
                 if(view.getLastVisiblePosition()==view.getCount()-1&&!isLoading){
-
-                    Log.e("xianyu","lastvisible+"+view.getLastVisiblePosition()+"totle-1="+view.getCount());
                     mLoadMore.setVisibility(View.VISIBLE);
                     isLoading=true;
                     new AsyncTask<Void, Void, List<NewsItem>>() {
@@ -173,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
                             List<NewsItem> loadItems=refreshDate("Old");
                             return loadItems;
                         }
-
                         @Override
                         protected void onPostExecute(List<NewsItem> loadItems) {
                             isLoading=false;
@@ -199,17 +190,13 @@ public class MainActivity extends AppCompatActivity {
                 super.onAnimationStart(animation);
                 isRunning = true;
             }
-
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 isRunning = false;
             }
-
         });
     }
-
-
     public void showBar() {
         mHeaderAnimator = ObjectAnimator.ofFloat(mHead_bar, "translationY", 0);
         mBottomAnimator = ObjectAnimator.ofFloat(mBottom_bar, "translationY", 0);

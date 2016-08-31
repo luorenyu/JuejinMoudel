@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="265dp"
-    android:background="#F2F6F9"
+    android:background="@color/listview_background"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -12,7 +12,7 @@
             android:id="@+id/blank"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@android:color/white"/>
+            android:background="@color/listview_background"/>
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_adv"
             android:layout_width="match_parent"
@@ -38,11 +38,6 @@
                 android:drawableTop="@drawable/h_o_t"
                 android:text="本周最热"
                 style="@style/topButtonStyle" />
-
         </LinearLayout>
-
     </LinearLayout>
-
-
-
 </FrameLayout>

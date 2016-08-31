@@ -12,4 +12,5 @@
     <color name="refresh_circle">#D60B16</color>
     <color name="text_gray">#D1D1D1</color>
     <color name="text_black">#363636</color>
+    <color name="listview_background">#F2F6F9</color>
 </resources>

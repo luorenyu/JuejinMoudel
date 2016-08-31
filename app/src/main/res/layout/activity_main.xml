@@ -14,6 +14,7 @@
         >
         <!--overScrollMode:listview 到顶部或底部拉出空白回弹的效果-->
         <ListView
+            android:scrollbars="vertical"
             android:fadingEdge="vertical"
             android:overScrollMode="never"
             android:dividerHeight="0.5dp"

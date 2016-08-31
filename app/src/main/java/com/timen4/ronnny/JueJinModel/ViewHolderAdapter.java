@@ -37,7 +37,6 @@ public class ViewHolderAdapter extends BaseAdapter {
             return CONTENT;
         }
     }
-
     @Override
     public int getViewTypeCount() {
         return 2;
