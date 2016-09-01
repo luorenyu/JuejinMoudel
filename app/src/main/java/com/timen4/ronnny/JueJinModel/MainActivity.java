@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         mlistView.setOnTouchListener(new View.OnTouchListener() {
             private float mEndY;
             private float mStartY;
+            private int direction;//0表示向上，1表示向下
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()){
@@ -130,11 +131,13 @@ public class MainActivity extends AppCompatActivity {
                         mEndY = event.getY();
                         float v1 = mEndY - mStartY;
 
-                        if (v1 > 3 && !isRunning ) {
+                        if (v1 > 3 && !isRunning&& direction == 1) {
+                            direction = 0;
                             showBar();
                             mStartY = mEndY;
                             return false;
-                        } else if (v1 < -3 && !isRunning) {
+                        } else if (v1 < -3 && !isRunning && direction == 0) {
+                            direction = 1;
                             hideBar();
                             mStartY = mEndY;
                             return false;
