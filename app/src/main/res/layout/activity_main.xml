@@ -6,56 +6,10 @@
     android:orientation="vertical"
     tools:context="com.timen4.ronnny.JueJinModel.MainActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/sr_refresh"
+    <FrameLayout
+        android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        >
-        <!--overScrollMode:listview 到顶部或底部拉出空白回弹的效果-->
-        <ListView
-            android:scrollbars="vertical"
-            android:fadingEdge="vertical"
-            android:overScrollMode="never"
-            android:dividerHeight="0.5dp"
-            android:divider="#05999999"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView"
-            android:layout_alignParentTop="true" />
-        <Button
-            android:clickable="true"
-            android:visibility="gone"
-            android:id="@+id/empty_fresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="暂无数据点击刷新"
-            android:textSize="40sp"
-            />
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <LinearLayout
-        android:visibility="visible"
-        android:clickable="true"
-        android:background="#0280FC"
-        android:gravity="center_vertical"
-        android:id="@+id/head_bar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-        <Button
-
-            android:drawableLeft="@drawable/tab_home_find_search"
-            android:paddingLeft="8dp"
-            android:drawablePadding="8dp"
-            android:layout_margin="7dp"
-            android:background="@drawable/search_button_selector"
-            android:textColor="#99ffffff"
-            android:text="@string/search"
-            android:gravity="left|center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_height="match_parent"/>
     <LinearLayout
         android:gravity="bottom"
         android:background="@drawable/shadow_bottom"
